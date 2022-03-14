@@ -10,15 +10,21 @@ for (let i = 0; i < 16; i++) {
 }
 
 canvas.addEventListener('mousedown', (e) => {
-  e.preventDefault;
   drawing = true;
+
+  if (e.target.style.backgroundColor !== '#000')
+    e.target.style.backgroundColor = '#000';
+
+  document.addEventListener(
+    'mouseup',
+    () => {
+      drawing = false;
+    },
+    { once: true }
+  );
 });
 
 canvas.addEventListener('mousemove', (e) => {
   e.preventDefault;
   if (drawing) e.target.style.backgroundColor = '#000';
-});
-
-document.addEventListener('mouseup', (e) => {
-  drawing = false;
 });
