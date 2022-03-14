@@ -1,0 +1,27 @@
+body {
+  background-color: cornflowerblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  min-height: 98.8vh;
+}
+main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#canvas {
+  max-width: 600px;
+  max-height: 600px;
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(16, 1fr);
+}
+.grid {
+  width: calc(600px / 16);
+  height: calc(600px / 16);
+  border: 1px solid black;
+  background-color: #fff;
+}
