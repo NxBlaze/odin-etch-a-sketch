@@ -1,8 +1,12 @@
 const canvas = document.getElementById('canvas');
 let drawing = false;
+const root = document.querySelector(':root');
 
-for (let i = 0; i < 16; i++) {
-  for (let j = 0; j < 16; j++) {
+let gridSize = 100;
+root.style.setProperty('--gridSize', gridSize);
+
+for (let i = 0; i < gridSize; i++) {
+  for (let j = 0; j < gridSize; j++) {
     let gridPixel = document.createElement('div');
     gridPixel.classList.add('grid');
     canvas.appendChild(gridPixel);
