@@ -1,12 +1,14 @@
-const canvas = document.getElementById('canvas');
-let drawing = false;
 const root = document.querySelector(':root');
+const canvas = document.getElementById('canvas');
+const sizeSlider = document.getElementById('sizeSlider');
 
-let gridSize = 30;
-root.style.setProperty('--gridSize', gridSize);
+root.style.setProperty('--gridSize', sizeSlider.value);
+drawGrid(sizeSlider.value);
 
-drawGrid(gridSize);
+sizeSlider.addEventListener('input', () => showNewSize(sizeSlider.value));
+sizeSlider.addEventListener('change', () => setNewSize(sizeSlider.value));
 
+let drawing = false;
 canvas.addEventListener('mousedown', (e) => {
   drawing = true;
 
@@ -27,7 +29,21 @@ canvas.addEventListener('mousemove', (e) => {
   if (drawing) e.target.style.backgroundColor = '#000';
 });
 
+function showNewSize(size) {
+  let sliderLabel = document.getElementById('sliderLabel');
+  sliderLabel.textContent = `Grid size: ${size} x ${size}`;
+}
+
+function setNewSize(size) {
+  root.style.setProperty('--gridSize', size);
+  drawGrid(size);
+}
+
 function drawGrid(size) {
+  while (canvas.firstChild) {
+    canvas.removeChild(canvas.firstChild);
+  }
+
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
       let gridPixel = document.createElement('div');
