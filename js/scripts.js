@@ -8,32 +8,33 @@ drawGrid(sizeSlider.value);
 sizeSlider.addEventListener('input', () => showNewSize(sizeSlider.value));
 sizeSlider.addEventListener('change', () => setNewSize(sizeSlider.value));
 
-let drawing = false;
-canvas.addEventListener('mousedown', (e) => {
-  drawing = true;
-
-  if (e.target.style.backgroundColor !== '#000')
-    e.target.style.backgroundColor = '#000';
-
-  document.addEventListener(
-    'mouseup',
-    () => {
-      drawing = false;
-    },
-    { once: true }
-  );
+let isMouseDown = false;
+document.addEventListener('mousedown', (e) => {
+  if (e.target.closest('.grid')) {
+    isMouseDown = true;
+    if (e.target.style.backgroundColor !== '#000')
+      e.target.style.backgroundColor = '#000';
+  }
 });
 
-canvas.addEventListener('mousemove', (e) => {
+document.addEventListener('mousemove', (e) => {
   e.preventDefault;
-  if (drawing) e.target.style.backgroundColor = '#000';
+  if (e.target.closest('.grid'))
+    if (isMouseDown) e.target.style.backgroundColor = '#000';
 });
 
+document.addEventListener('mouseup', () => {
+  isMouseDown = false;
+});
+
+// Functions handling drawing and resizing the grid.
+
+// Preview new grid size on slider's label
 function showNewSize(size) {
   let sliderLabel = document.getElementById('sliderLabel');
   sliderLabel.textContent = `Grid size: ${size} x ${size}`;
 }
-
+// Apply new size and redraw the grid
 function setNewSize(size) {
   root.style.setProperty('--gridSize', size);
   drawGrid(size);
