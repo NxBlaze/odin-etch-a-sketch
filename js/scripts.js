@@ -8,12 +8,19 @@ drawGrid(sizeSlider.value);
 sizeSlider.addEventListener('input', () => showNewSize(sizeSlider.value));
 sizeSlider.addEventListener('change', () => setNewSize(sizeSlider.value));
 
+const penColorPicker = document.getElementById('penColor');
+let penColor = penColorPicker.value;
+penColorPicker.addEventListener(
+  'change',
+  () => (penColor = penColorPicker.value)
+);
+
 let isMouseDown = false;
 document.addEventListener('mousedown', (e) => {
   if (e.target.closest('.grid')) {
     isMouseDown = true;
-    if (e.target.style.backgroundColor !== '#000')
-      e.target.style.backgroundColor = '#000';
+    if (e.target.style.backgroundColor !== penColor)
+      e.target.style.backgroundColor = penColor;
   }
 
   document.addEventListener(
@@ -27,7 +34,7 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('mousemove', (e) => {
   if (e.target.closest('.grid'))
-    if (isMouseDown) e.target.style.backgroundColor = '#000';
+    if (isMouseDown) e.target.style.backgroundColor = penColor;
 });
 
 document.addEventListener('mouseup', () => {
