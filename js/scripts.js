@@ -15,10 +15,17 @@ document.addEventListener('mousedown', (e) => {
     if (e.target.style.backgroundColor !== '#000')
       e.target.style.backgroundColor = '#000';
   }
+
+  document.addEventListener(
+    'mouseleave',
+    () => {
+      isMouseDown = false;
+    },
+    { once: true }
+  );
 });
 
 document.addEventListener('mousemove', (e) => {
-  e.preventDefault;
   if (e.target.closest('.grid'))
     if (isMouseDown) e.target.style.backgroundColor = '#000';
 });
