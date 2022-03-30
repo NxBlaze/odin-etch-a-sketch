@@ -1,6 +1,7 @@
 const root = document.querySelector(':root');
 const canvas = document.getElementById('canvas');
 const sizeSlider = document.getElementById('sizeSlider');
+const clearGridBtn = document.getElementById('clearGridBtn');
 
 root.style.setProperty('--gridSize', sizeSlider.value);
 drawGrid(sizeSlider.value);
@@ -14,6 +15,8 @@ penColorPicker.addEventListener(
   'change',
   () => (penColor = penColorPicker.value)
 );
+
+clearGridBtn.addEventListener('click', () => clearGrid(sizeSlider.value));
 
 let isMouseDown = false;
 document.addEventListener('mousedown', (e) => {
