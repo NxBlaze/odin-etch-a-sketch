@@ -48,22 +48,45 @@ function showNewSize(size) {
   let sliderLabel = document.getElementById('sliderLabel');
   sliderLabel.textContent = `Grid size: ${size} x ${size}`;
 }
+
 // Apply new size and redraw the grid
 function setNewSize(size) {
-  root.style.setProperty('--gridSize', size);
-  drawGrid(size);
-}
-
-function drawGrid(size) {
-  while (canvas.firstChild) {
-    canvas.removeChild(canvas.firstChild);
+  if (size < 10 || size > 100) {
+    alert(`Grid size is outside valid range, the page will be reloaded`);
+    location.reload();
   }
 
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
-      let gridPixel = document.createElement('div');
-      gridPixel.classList.add('grid');
-      canvas.appendChild(gridPixel);
-    }
+  root.style.setProperty('--gridSize', size);
+  drawGrid(size);
+  clearGrid(size);
+}
+
+// Add or remove grid cells until it matches the requested size
+function drawGrid(size) {
+  let newSize = size ** 2;
+  let currentSize = canvas.children.length;
+
+  while (newSize < currentSize) {
+    canvas.removeChild(canvas.firstChild);
+    currentSize--;
+  }
+
+  while (newSize > currentSize) {
+    let gridPixel = document.createElement('div');
+    gridPixel.classList.add('grid');
+    canvas.appendChild(gridPixel);
+    currentSize++;
+  }
+}
+
+function clearGrid(size) {
+  let newSize = size ** 2;
+  for (let i = 0; i < newSize; i++) {
+    let gridPixel = canvas.children.item(i);
+    if (
+      gridPixel.style.backgroundColor !== '#fff' ||
+      gridPixel.style.backgroundColor !== '#ffffff'
+    )
+      gridPixel.style.backgroundColor = '#fff';
   }
 }
