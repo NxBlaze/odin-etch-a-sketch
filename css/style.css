@@ -30,7 +30,6 @@ main {
   display: grid;
   grid-template-columns: repeat(var(--gridSize), 1fr);
   grid-template-rows: repeat(var(--gridSize), 1fr);
-  background-color: #fff;
 }
 .grid {
   width: calc(600px / var(--gridSize));

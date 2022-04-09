@@ -39,37 +39,30 @@ bgColorPicker.addEventListener('input', () => {
 // Clear canvas
 clearGridBtn.addEventListener('click', () => clearGrid(sizeSlider.value));
 
-let isMouseDown = false;
+let isDrawing = false;
 document.addEventListener('mousedown', (e) => {
   if (e.target.closest('.grid')) {
-    isMouseDown = true;
+    isDrawing = true;
     drawOnCanvas(drawingMode, e.target.closest('.grid'));
-    // if (e.target.style.backgroundColor !== penColor) {
-    //   e.target.style.backgroundColor = penColor;
-    //   e.target.classList.add('painted');
-    // }
   }
 
   document.addEventListener(
     'mouseleave',
     () => {
-      isMouseDown = false;
+      isDrawing = false;
     },
     { once: true }
   );
 });
 
 document.addEventListener('mouseover', (e) => {
-  if (e.target.closest('.grid'))
-    if (isMouseDown) {
-      drawOnCanvas(drawingMode, e.target.closest('.grid'));
-      // e.target.style.backgroundColor = penColor;
-      // e.target.classList.add('painted');
-    }
+  if (e.target.closest('.grid') && isDrawing) {
+    drawOnCanvas(drawingMode, e.target.closest('.grid'));
+  }
 });
 
 document.addEventListener('mouseup', () => {
-  isMouseDown = false;
+  isDrawing = false;
 });
 
 // FUNCTION DEFINITIONS
@@ -133,6 +126,7 @@ function drawOnCanvas(mode, target) {
   else if (mode === 'modeRainbow') drawRainbow(target);
   else if (mode === 'modeLighten') drawLighten(target);
   else if (mode === 'modeDarken') drawDarken(target);
+  else if (mode === 'modeEraser') drawEraser(target);
 }
 
 function drawWithPen(target) {
@@ -248,4 +242,8 @@ function drawRainbow(target) {
 // Generate random value for RGB
 function random256() {
   return Math.floor(Math.random() * 256);
+}
+
+function drawEraser(target) {
+  target.style.backgroundColor = 'transparent';
 }
