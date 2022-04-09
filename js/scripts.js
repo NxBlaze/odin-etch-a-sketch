@@ -17,15 +17,11 @@ penColorPicker.addEventListener(
   () => (penColor = penColorPicker.value)
 );
 
-let bgColor = bgColorPicker.value;
 bgColorPicker.addEventListener('input', () => {
-  bgColor = bgColorPicker.value;
-  bgColorChange(sizeSlider.value, bgColor);
+  bgColorChange(bgColorPicker.value);
 });
 
-clearGridBtn.addEventListener('click', () =>
-  clearGrid(sizeSlider.value, bgColor)
-);
+clearGridBtn.addEventListener('click', () => clearGrid(sizeSlider.value));
 
 let isMouseDown = false;
 document.addEventListener('mousedown', (e) => {
@@ -77,7 +73,7 @@ function setNewSize(size) {
 
   root.style.setProperty('--gridSize', size);
   drawGrid(size);
-  clearGrid(size, bgColor);
+  clearGrid(size);
 }
 
 // Add or remove grid cells until it matches the requested size
@@ -98,21 +94,16 @@ function drawGrid(size) {
   }
 }
 
-function clearGrid(size, color) {
+function clearGrid(size) {
   let newSize = size ** 2;
   for (let i = 0; i < newSize; i++) {
     let gridPixel = canvas.children.item(i);
     gridPixel.classList.remove('painted');
-    gridPixel.style.backgroundColor = color;
+    gridPixel.style.backgroundColor = 'transparent';
   }
 }
 
 // Change colors of unpainted pixels
-function bgColorChange(size, color) {
-  let newSize = size ** 2;
-  for (let i = 0; i < newSize; i++) {
-    let gridPixel = canvas.children.item(i);
-    if (!gridPixel.classList.contains('painted'))
-      gridPixel.style.backgroundColor = color;
-  }
+function bgColorChange(color) {
+  canvas.style.backgroundColor = color;
 }
