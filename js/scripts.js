@@ -127,21 +127,88 @@ function bgColorChange(color) {
 }
 
 //-- Functions handling drawing
-
+// Main drawing function
 function drawOnCanvas(mode, target) {
   if (mode === 'modePen') drawWithPen(target);
   else if (mode === 'modeRainbow') drawRainbow(target);
+  else if (mode === 'modeLighten') drawLighten(target);
 }
 
 function drawWithPen(target) {
   if (target.style.backgroundColor !== penColor)
     target.style.backgroundColor = penColor;
 }
+// Lighten the pixel by ~10% without altering its hue
+function drawLighten(target) {
+  // Stop if there's nothing to lighten
+  if (
+    target.style.backgroundColor === 'transparent' ||
+    !target.style.backgroundColor
+  )
+    return;
+
+  // Convert RGB values to array and find the lowest / middle / highest ones.
+  const bgColorsArray = rgbToArray(target.style.backgroundColor);
+  const [lowest, middle, highest] = rgbSort(bgColorsArray);
+
+  // Stop if color is already white
+  if (lowest.value === 255) return;
+
+  const bgLightened = [];
+
+  // Increase the lowest RGB value by 10%, without going over 255.
+  bgLightened[lowest.index] = Math.round(
+    lowest.value + Math.min(255 - lowest.value, 25.5)
+  );
+
+  // Calculate the factor to increase other values by
+  const increaseFactor =
+    (bgLightened[lowest.index] - lowest.value) / (255 - lowest.value);
+
+  // Increase other values by correct amount
+  bgLightened[middle.index] =
+    middle.value + (255 - middle.value) * increaseFactor;
+  bgLightened[highest.index] =
+    highest.value + (255 - highest.value) * increaseFactor;
+
+  // Apply new color
+  target.style.backgroundColor = `rgb(${bgLightened.join(', ')})`;
+}
+
+// Convert RGB values to array
+function rgbToArray(rgb) {
+  return rgb
+    .replace(/ /g, '')
+    .slice(4, -1)
+    .split(',')
+    .map((value) => parseInt(value));
+}
+
+// Map RGB values lowest to highest
+function rgbSort(rgbArray) {
+  let highest = { value: -1, index: -1 };
+  let lowest = { value: Infinity, index: -1 };
+
+  rgbArray.map((value, index) => {
+    if (value > highest.value) highest = { value: value, index: index };
+    if (value < lowest.value) lowest = { value: value, index: index };
+  });
+
+  if (lowest.index === highest.index) {
+    lowest.index = highest.index++;
+  }
+
+  let middle = { index: 3 - highest.index - lowest.index };
+  middle.value = rgbArray[middle.index];
+
+  return [lowest, middle, highest];
+}
 
 function drawRainbow(target) {
   target.style.backgroundColor = `rgb(${random256()}, ${random256()}, ${random256()})`;
 }
 
+// Generate random value for RGB
 function random256() {
   return Math.floor(Math.random() * 256);
 }
