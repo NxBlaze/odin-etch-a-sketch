@@ -4,12 +4,24 @@ const sizeSlider = document.getElementById('sizeSlider');
 const clearGridBtn = document.getElementById('clearGridBtn');
 const penColorPicker = document.getElementById('penColor');
 const bgColorPicker = document.getElementById('backgroundColor');
+const modeSelection = document.getElementById('modeSelection');
 
 root.style.setProperty('--gridSize', sizeSlider.value);
 drawGrid(sizeSlider.value);
 
 sizeSlider.addEventListener('input', () => showNewSize(sizeSlider.value));
 sizeSlider.addEventListener('change', () => setNewSize(sizeSlider.value));
+
+let drawingMode = 'modePen';
+modeSelection.addEventListener('click', (e) => {
+  let clicked = e.target.closest('BUTTON');
+  drawingMode = clicked.id;
+
+  for (let i = 0; i < modeSelection.children.length; i++)
+    modeSelection.children.item(i).classList.remove('btn-active');
+
+  clicked.classList.add('btn-active');
+});
 
 let penColor = penColorPicker.value;
 penColorPicker.addEventListener(

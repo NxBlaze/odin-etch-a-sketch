@@ -42,3 +42,6 @@ main {
 #sliderLabel {
   display: block;
 }
+.btn-active {
+  background-color: tomato;
+}
