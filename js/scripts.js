@@ -132,20 +132,23 @@ function drawOnCanvas(mode, target) {
   if (mode === 'modePen') drawWithPen(target);
   else if (mode === 'modeRainbow') drawRainbow(target);
   else if (mode === 'modeLighten') drawLighten(target);
+  else if (mode === 'modeDarken') drawDarken(target);
 }
 
 function drawWithPen(target) {
   if (target.style.backgroundColor !== penColor)
     target.style.backgroundColor = penColor;
 }
-// Lighten the pixel by ~10% without altering its hue
+
+// Lighten the pixel by ~10% without altering its hue.
+// We'll lose saturation as we get closer to white
 function drawLighten(target) {
-  // Stop if there's nothing to lighten
+  // If pixel has no color, use canvas' background color.
   if (
     target.style.backgroundColor === 'transparent' ||
     !target.style.backgroundColor
   )
-    return;
+    target.style.backgroundColor = canvas.style.backgroundColor;
 
   // Convert RGB values to array and find the lowest / middle / highest ones.
   const bgColorsArray = rgbToArray(target.style.backgroundColor);
@@ -165,7 +168,7 @@ function drawLighten(target) {
   const increaseFactor =
     (bgLightened[lowest.index] - lowest.value) / (255 - lowest.value);
 
-  // Increase other values by correct amount
+  // Increase other values
   bgLightened[middle.index] =
     middle.value + (255 - middle.value) * increaseFactor;
   bgLightened[highest.index] =
@@ -173,6 +176,40 @@ function drawLighten(target) {
 
   // Apply new color
   target.style.backgroundColor = `rgb(${bgLightened.join(', ')})`;
+}
+
+// Darken the pixel by ~10% without altering its hue.
+// We'll lose saturation, as we get closer to black.
+function drawDarken(target) {
+  // If pixel has no color, use canvas' background color.
+  if (
+    target.style.backgroundColor === 'transparent' ||
+    !target.style.backgroundColor
+  )
+    target.style.backgroundColor = canvas.style.backgroundColor;
+
+  // Convert RGB values to array and find the lowest / middle / highest ones.
+  const bgColorsArray = rgbToArray(target.style.backgroundColor);
+  const [lowest, middle, highest] = rgbSort(bgColorsArray);
+
+  // Stop if color is already black
+  if (highest.value === 0) return;
+
+  const bgDarkened = [];
+
+  // Decrease the highest RGB value by 10%, without going below 0
+  bgDarkened[highest.index] = highest.value - Math.min(highest.value, 25.5);
+
+  // Calculate the factor to decrease other values by
+  const decreaseFactor =
+    (highest.value - bgDarkened[highest.index]) / highest.value;
+
+  // Decrease other values
+  bgDarkened[middle.index] = middle.value - middle.value * decreaseFactor;
+  bgDarkened[lowest.index] = lowest.value - lowest.value * decreaseFactor;
+
+  // Apply new color
+  target.style.backgroundColor = `rgb(${bgDarkened.join(', ')})`;
 }
 
 // Convert RGB values to array
