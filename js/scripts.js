@@ -59,7 +59,7 @@ document.addEventListener('mousedown', (e) => {
   );
 });
 
-document.addEventListener('mousemove', (e) => {
+document.addEventListener('mouseover', (e) => {
   if (e.target.closest('.grid'))
     if (isMouseDown) {
       drawOnCanvas(drawingMode, e.target.closest('.grid'));
