@@ -11,33 +11,13 @@
   </head>
   <body>
     <header>
-      <h1>Etch-A-Sketch</h1>
+      <h1>Pixel Painter</h1>
     </header>
 
     <main>
       <aside>
         <!-- Side menu -->
-        <div id="modeSelection">
-          <button id="modePen" class="btn-active">Pen</button>
-          <button id="modeLighten">Lighten</button>
-          <button id="modeDarken">Darken</button>
-          <button id="modeRainbow">RAINBOW MODE</button>
-          <button id="modeEraser">Eraser</button>
-        </div>
-        <div>
-          <input type="color" name="penColor" id="penColor" value="#000000" />
-          <label for="penColor">Pen Color</label>
-        </div>
-        <div>
-          <input
-            type="color"
-            name="backgroundColor"
-            id="backgroundColor"
-            value="#ffffff"
-          />
-          <label for="penColor">Background Color</label>
-        </div>
-        <div>
+        <div class="grid-size-wrapper">
           <input
             type="range"
             min="10"
@@ -49,6 +29,37 @@
           />
           <label id="sliderLabel" for="sizeSlider">Grid size: 30 x 30</label>
         </div>
+        <div>
+          <div class="color-select">
+            <div class="input-color-wrapper">
+              <input
+                type="color"
+                name="penColor"
+                id="penColor"
+                value="#000000"
+              />
+            </div>
+            <label for="penColor">Pen Color</label>
+          </div>
+          <div class="color-select">
+            <div class="input-color-wrapper">
+              <input
+                type="color"
+                name="backgroundColor"
+                id="backgroundColor"
+                value="#ffffff"
+              />
+            </div>
+            <label for="penColor">Background Color</label>
+          </div>
+        </div>
+        <div id="modeSelection">
+          <button id="modePen" class="btn-active">Pen</button>
+          <button id="modeLighten">Lighten</button>
+          <button id="modeDarken">Darken</button>
+          <button id="modeRainbow"><span>RAINBOW MODE</span></button>
+          <button id="modeEraser">Eraser</button>
+        </div>
         <button id="clearGridBtn">Clear Canvas</button>
       </aside>
 
@@ -57,6 +68,9 @@
       </section>
     </main>
 
-    <footer>Copyright 2022 NxBlaze</footer>
+    <footer>
+      Copyright &copy; 2022
+      <a href="https://github.com/NxBlaze" target="_blank">NxBlaze</a>
+    </footer>
   </body>
 </html>

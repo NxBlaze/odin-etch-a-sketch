@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 *,
 *::after,
 *::before {
@@ -6,17 +7,34 @@
   -webkit-user-drag: none;
   -webkit-app-region: no-drag;
   cursor: default;
+  font-family: 'Press Start 2p', Impact, Haettenschweiler, 'Arial Narrow Bold',
+    sans-serif;
+  font-size: 16px;
 }
 :root {
   --gridSize: 16;
+  --mainColor: rgb(85, 193, 236);
+  --secondaryColor: rgb(78, 88, 105);
 }
 body {
-  background-color: cornflowerblue;
+  background-color: rgb(60, 68, 83);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
   min-height: 98.8vh;
+  color: var(--mainColor);
+}
+h1 {
+  font-size: 4rem;
+}
+a {
+  text-decoration: none;
+  color: var(--secondaryColor);
+  cursor: pointer;
+}
+a:hover {
+  color: #8a6aff;
 }
 main {
   width: 100%;
@@ -24,12 +42,22 @@ main {
   align-items: center;
   justify-content: space-evenly;
 }
+aside {
+  background-color: var(--secondaryColor);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  border-radius: 10px;
+}
 #canvas {
   max-width: 600px;
   max-height: 600px;
   display: grid;
   grid-template-columns: repeat(var(--gridSize), 1fr);
   grid-template-rows: repeat(var(--gridSize), 1fr);
+  border: 25px solid var(--secondaryColor);
+  border-radius: 10px;
 }
 .grid {
   width: calc(600px / var(--gridSize));
@@ -37,10 +65,161 @@ main {
   background-color: transparent;
   box-sizing: border-box;
 }
-#sizeSlider,
-#sliderLabel {
+#modeSelection {
+  width: 100%;
+}
+button {
   display: block;
+  width: 100%;
+  min-height: 50px;
+  border: 2px solid var(--mainColor);
+  margin: 20px 0;
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+  color: var(--mainColor);
+}
+button:hover {
+  background-color: var(--mainColor);
+  color: var(--secondaryColor);
 }
 .btn-active {
-  background-color: tomato;
+  background-color: var(--mainColor);
+  color: var(--secondaryColor);
+}
+#modeRainbow > span {
+  background: #ff0000;
+  background: -webkit-linear-gradient(
+    90deg,
+    #ff6a6a 0%,
+    #5593ff 50%,
+    #1bff00 100%
+  );
+  background: linear-gradient(90deg, #ff6a6a 0%, #5593ff 50%, #1bff00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+input[type='color'] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 60px;
+  height: 60px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.color-select {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.input-color-wrapper {
+  display: inline-block;
+  position: relative;
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-sizing: border-box;
+  margin-right: 10px;
+  border: 1px solid var(--mainColor);
+}
+.input-color-wrapper:hover {
+  border: 2px solid var(--mainColor);
+  transform: scale(130%);
+}
+.grid-size-wrapper {
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.grid-size-wrapper > label {
+  margin-top: 20px;
+  font-size: 0.8rem;
+}
+input[type='range'] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background-color: transparent;
+}
+input[type='range']:focus {
+  outline: none;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  background: #3c4453;
+  border: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 20px;
+  cursor: pointer;
+}
+input[type='range']::-webkit-slider-thumb {
+  margin-top: -7.5px;
+  width: 35px;
+  height: 35px;
+  background: #55c1ec;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+input[type='range']:focus::-webkit-slider-runnable-track {
+  background: #8691a7;
+}
+input[type='range']::-moz-range-track {
+  background: var(--secondaryColor);
+  border: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 20px;
+  cursor: pointer;
+}
+input[type='range']::-moz-range-thumb {
+  width: 35px;
+  height: 35px;
+  background: #55c1ec;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  cursor: pointer;
+}
+input[type='range']::-ms-track {
+  background: transparent;
+  color: transparent;
+  width: 100%;
+  height: 20px;
+  cursor: pointer;
+}
+input[type='range']::-ms-fill-lower {
+  background: #000000;
+  border-radius: 10px;
+}
+input[type='range']::-ms-fill-upper {
+  background: var(--secondaryColor);
+  border: 0;
+  border-radius: 10px;
+}
+input[type='range']::-ms-thumb {
+  width: 35px;
+  height: 35px;
+  background: #55c1ec;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 0px;
+  /*Needed to keep the Edge thumb centred*/
+}
+input[type='range']:focus::-ms-fill-lower {
+  background: #3c4453;
+}
+input[type='range']:focus::-ms-fill-upper {
+  background: #8691a7;
 }
