@@ -96,6 +96,7 @@ button:hover {
     #1bff00 100%
   );
   background: linear-gradient(90deg, #ff6a6a 0%, #5593ff 50%, #1bff00 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
