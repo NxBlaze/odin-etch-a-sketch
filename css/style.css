@@ -12,7 +12,7 @@
   font-size: 16px;
 }
 :root {
-  --gridSize: 16;
+  --gridSize: 30;
   --mainColor: rgb(85, 193, 236);
   --secondaryColor: rgb(78, 88, 105);
 }
